@@ -1,0 +1,48 @@
+@import "tailwindcss";
+body {
+    font-family: "Poppins";
+}
+
+.animate-scroll {
+    display: flex;
+    animation: scroll 18s linear infinite;
+    /* slowed down */
+    animation-iteration-count: infinite;
+    gap: 4rem;
+    /* spacing between items */
+    will-change: transform;
+    /* optimization */
+}
+
+/* Keyframes for smooth scroll */
+@keyframes scroll {
+    0% {
+        transform: translateX(20%);
+    }
+
+    50% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Make items pop on hover */
+.animate-scroll img {
+    transition: transform 1.5s ease, filter 1.5s ease;
+    /* smoother + slower */
+}
+
+.animate-scroll img:hover {
+    transform: scale(1.15) rotate(-3deg);
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.4));
+    cursor: pointer;
+}
+
+/* Optional subtle blur for depth */
+.animate-scroll img:not(:hover) {
+    filter: brightness(0.9) blur(0.5px);
+    transition: filter 0.4s ease;
+}

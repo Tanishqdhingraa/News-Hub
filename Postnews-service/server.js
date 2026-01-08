@@ -11,10 +11,14 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 // Connect MongoDB
+
+app.get("/",(req , res)=>{
+    res.send(`🤷‍♀️ Post service here `) 
+})
 connectDB();
 
 // Routes
-app.use("/api/posts", postRoutes);
+app.use("/api/v1", postRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Post Service running on port ${PORT}`));
+const PORT = process.env.PORT ;
+app.listen(PORT, () => console.log(`✅ Post Service running on port http://localhost:${PORT}`));

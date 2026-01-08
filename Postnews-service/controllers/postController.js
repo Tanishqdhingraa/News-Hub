@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const cloudinary = require("../config/cloudinary");
 
 // ✅ Create a new post
 exports.createPost = async (req, res) => {
@@ -9,18 +10,44 @@ exports.createPost = async (req, res) => {
       return res.status(400).json({ message: "Subject and content are required" });
     }
 
-    const photoPath = req.file ? req.file.path : null;
+    let photoUrl = null;
+
+    if (req.file) {
+      const uploadResult = await cloudinary.uploader.upload_stream(
+        { folder: "posts" },
+        async (error, result) => {
+          if (error) {
+            return res.status(500).json({ message: "Cloudinary upload failed" });
+          }
+
+          const newPost = await Post.create({
+            subject,
+            content,
+            photo: result.secure_url,
+          });
+
+          return res.status(201).json({
+            message: "Post created successfully",
+            post: newPost,
+          });
+        }
+      );
+
+      uploadResult.end(req.file.buffer);
+      return;
+    }
 
     const newPost = await Post.create({
       subject,
       content,
-      photo: photoPath,
+      photo: photoUrl,
     });
 
     res.status(201).json({
       message: "Post created successfully",
       post: newPost,
     });
+
   } catch (error) {
     res.status(500).json({
       message: "Error creating post",

@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { publishUserLogin } from "../rabbitmq/producer.js";
+
 
 // 🚨 JWT secret must exist
 // if (!process.env.JWT_SECRET) {
@@ -56,6 +58,8 @@ export const registerUser = async (req, res) => {
   }
 };
 
+
+
 /**
  * 🔐 LOGIN USER
  */
@@ -67,13 +71,12 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Email and password are required" });
     }
 
-    // Explicitly select password
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+password +name +email");
+
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // Compare password using model method
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
@@ -86,13 +89,20 @@ export const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // 🔥 Fire & forget event
+    publishUserLogin(user).catch(err =>
+      console.error("RabbitMQ publish failed:", err)
+    );
+
+    // Send response
     res.status(200).json({
       message: "Login successful",
       user: {
         id: user._id,
         email: user.email,
+        name: user.name
       },
-      token,
+      token
     });
 
   } catch (error) {
@@ -100,6 +110,7 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error during login" });
   }
 };
+
 
 
 export const getAllUsers = async (req, res) => {

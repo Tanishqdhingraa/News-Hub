@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
-
+// import publishUserLogin from "./rabbitmq/producer.js"
 dotenv.config();
 
 const app = express();

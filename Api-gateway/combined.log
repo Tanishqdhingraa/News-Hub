@@ -1,1 +1,20 @@
 {"level":"info","message":"API Gateway running on port 3000","service":"api-gateway","timestamp":"2025-11-11T05:53:38.110Z"}
+{"level":"info","message":"API Gateway running on port 5000","service":"api-gateway","timestamp":"2025-11-11T10:59:50.979Z"}
+{"level":"info","message":"Proxy Mounted: /ai → http://localhost:3001","service":"api-gateway","timestamp":"2025-11-14T19:48:26.610Z"}
+{"level":"info","message":"Proxy Mounted: /auth → http://localhost:3002","service":"api-gateway","timestamp":"2025-11-14T19:48:26.613Z"}
+{"level":"info","message":"Proxy Mounted: /posts → http://localhost:3003","service":"api-gateway","timestamp":"2025-11-14T19:48:26.614Z"}
+{"level":"info","message":"API Gateway running on port 5000","service":"api-gateway","timestamp":"2025-11-14T19:48:26.623Z"}
+{"level":"info","message":"Proxy Mounted: /ai → http://localhost:3001","service":"api-gateway","timestamp":"2026-01-05T08:58:42.870Z"}
+{"level":"info","message":"Proxy Mounted: /auth → http://localhost:3002","service":"api-gateway","timestamp":"2026-01-05T08:58:42.878Z"}
+{"level":"info","message":"Proxy Mounted: /posts → http://localhost:3003","service":"api-gateway","timestamp":"2026-01-05T08:58:42.880Z"}
+{"level":"info","message":"API Gateway running on port 5000","service":"api-gateway","timestamp":"2026-01-05T08:58:42.913Z"}
+{"level":"info","message":"Proxy Mounted: /ai → http://localhost:3001","service":"api-gateway","timestamp":"2026-01-05T08:59:42.397Z"}
+{"level":"info","message":"Proxy Mounted: /auth → http://localhost:3002","service":"api-gateway","timestamp":"2026-01-05T08:59:42.405Z"}
+{"level":"info","message":"Proxy Mounted: /posts → http://localhost:3003","service":"api-gateway","timestamp":"2026-01-05T08:59:42.407Z"}
+{"level":"info","message":"API Gateway running on port 5000","service":"api-gateway","timestamp":"2026-01-05T08:59:42.421Z"}
+{"level":"info","message":"Request: GET /api/v1/auth/signup","service":"api-gateway","timestamp":"2026-01-05T09:21:44.513Z"}
+{"level":"info","message":"Body: {\"email\":\"user@example.com\",\"password\":\"password123\"}","service":"api-gateway","timestamp":"2026-01-05T09:21:44.520Z"}
+{"level":"info","message":"Request: POST /api/v1/auth/signup","service":"api-gateway","timestamp":"2026-01-05T09:21:48.534Z"}
+{"level":"info","message":"Body: {\"email\":\"user@example.com\",\"password\":\"password123\"}","service":"api-gateway","timestamp":"2026-01-05T09:21:48.535Z"}
+{"level":"info","message":"Proxy Mounted: /auth → http://localhost:3002","service":"api-gateway","timestamp":"2026-01-08T14:57:44.750Z"}
+{"level":"info","message":"Proxy Mounted: /posts → http://localhost:3003","service":"api-gateway","timestamp":"2026-01-08T14:57:44.755Z"}

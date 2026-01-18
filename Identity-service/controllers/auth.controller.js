@@ -9,10 +9,6 @@ import { publishUserLogin } from "../rabbitmq/producer.js";
 // }
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
-/**
- * 🧠 REGISTER USER
- */
 export const registerUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -27,7 +23,7 @@ export const registerUser = async (req, res) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    // Create user (password hashed by model)
+    // Create user
     const user = await User.create({ email, password });
 
     // Generate JWT
@@ -37,19 +33,28 @@ export const registerUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // 🔥 Non-blocking signup event
+    publishUserLogin({
+      userId: user._id.toString(),
+      email: user.email,
+      name:  "News Enthusiast",
+      event: "USER_SIGNED_UP"
+    }).catch(err => {
+      console.error("RabbitMQ signup event failed:", err);
+    });
+
     res.status(201).json({
       message: "User registered successfully",
       user: {
         id: user._id,
-        email: user.email,
+        email: user.email
       },
-      token,
+      token
     });
 
   } catch (error) {
     console.error("Register Error:", error);
 
-    // Handle duplicate key error
     if (error.code === 11000) {
       return res.status(409).json({ message: "Email already registered" });
     }
@@ -57,6 +62,7 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: "Server error during signup" });
   }
 };
+
 
 
 
@@ -72,29 +78,25 @@ export const loginUser = async (req, res) => {
     }
 
     const user = await User.findOne({ email }).select("+password +name +email");
-
-    if (!user) {
+    if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    // Generate JWT
     const token = jwt.sign(
       { userId: user._id },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    // 🔥 Fire & forget event
-    publishUserLogin(user).catch(err =>
-      console.error("RabbitMQ publish failed:", err)
-    );
+    // 🔥 Non-blocking event
+    publishUserLogin({
+      userId: user._id.toString(),
+      email: user.email,
+      name: user.name
+    }).catch(err => {
+      console.error("RabbitMQ publish failed:", err);
+    });
 
-    // Send response
     res.status(200).json({
       message: "Login successful",
       user: {
@@ -110,6 +112,7 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error during login" });
   }
 };
+
 
 
 

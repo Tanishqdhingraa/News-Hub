@@ -7,9 +7,7 @@ let channel;
 export async function initRabbitMQ() {
   const connection = await amqp.connect("amqp://admin:admin123@localhost:5672");
   channel = await connection.createConfirmChannel();
-
   await channel.assertExchange(EXCHANGE, "topic", { durable: true });
-
   console.log("✅ RabbitMQ connected");
 }
 

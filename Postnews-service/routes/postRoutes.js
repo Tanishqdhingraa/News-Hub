@@ -16,7 +16,7 @@ const upload = require("../middleware/upload");
 const { createPost,getAllPosts } = require("../controllers/postController");
 
 router.post("/posts", upload.single("photo"), createPost);
-router.get("/", getAllPosts);
+router.get("/getAllPosts", getAllPosts);
 
 
 module.exports = router;

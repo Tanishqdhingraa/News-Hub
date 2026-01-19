@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const cloudinary = require("../config/cloudinary");
+// const { Postednewsproducer } = require("../rabbitmq/producer");
 
 // ✅ Create a new post
 exports.createPost = async (req, res) => {
@@ -9,7 +10,14 @@ exports.createPost = async (req, res) => {
     if (!subject || !content) {
       return res.status(400).json({ message: "Subject and content are required" });
     }
-
+    // ✅ check existing subject
+    const existingSubject = await Post.findOne({ subject });
+    if (existingSubject) {
+      return res.status(400).json({
+        message: "Post not created because this subject already exists",
+      });
+    }
+      
     let photoUrl = null;
 
     if (req.file) {
@@ -42,6 +50,12 @@ exports.createPost = async (req, res) => {
       content,
       photo: photoUrl,
     });
+    // // sending to mail service 
+    // Postednewsproducer({
+    // subject: newPost.subject,
+    // content: newPost.content
+    // })
+
 
     res.status(201).json({
       message: "Post created successfully",

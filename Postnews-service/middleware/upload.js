@@ -6,8 +6,7 @@ const fileFilter = (req, file, cb) => {
   const allowed = [
   "image/jpeg",
   "image/png",
-  "image/jpg",
-  "image/webp"
+  "image/jpg"
 ];
 
   if (allowed.includes(file.mimetype)) cb(null, true);
@@ -15,3 +14,5 @@ const fileFilter = (req, file, cb) => {
 };
 
 module.exports = multer({ storage, fileFilter });
+
+

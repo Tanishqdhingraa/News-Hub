@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 
 const postRoutes = require("./routes/postroutes");
+const { Postednewsproducer } = require("./rabbitmq/producer");
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,9 @@ connectDB();
 
 // Routes
 app.use("/api/v1", postRoutes);
+
+
+// Postednewsproducer('hello')
 
 const PORT = process.env.PORT ;
 app.listen(PORT, () => console.log(`✅ Post Service running on port http://localhost:${PORT}`));

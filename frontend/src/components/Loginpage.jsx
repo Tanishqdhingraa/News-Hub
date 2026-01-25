@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const Login = () => {
   return (
     <>
     <Navbar/>
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden rounded-4xl mt-16">
       {/* 🔹 Background Video */}
       <video
         autoPlay
@@ -79,6 +80,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   );
 };

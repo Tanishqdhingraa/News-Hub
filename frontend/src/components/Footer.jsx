@@ -1,8 +1,8 @@
 import React from 'react';
-
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <footer className="bg-blue-700 text-white py-10 mt-20">
+    <footer className="bg-blue-700 text-white py-10 mt-20 rounded-4xl">
       <div className="w-[90%] mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-10">
         
         {/* Left - Brand Info */}
@@ -14,18 +14,16 @@ const Footer = () => {
             <span className="font-semibold"> ask AI</span> to fact-check information.
           </p>
         </div>
+        <ul className="space-y-2 text-gray-200">
+          <li><Link to="/" className="hover:text-yellow-300 transition">Home</Link></li>
+          <li><Link to="/post-news" className="hover:text-yellow-300 transition">Post News</Link></li>
+          <li><Link to="/read-news" className="hover:text-yellow-300 transition">Read News</Link></li>
+          <li><Link to="/ask-ai" className="hover:text-yellow-300 transition">Ask AI</Link></li>
+          <li><Link to="/about" className="hover:text-yellow-300 transition">About</Link></li>
+          <li><Link to="/login" className="hover:text-yellow-300 transition">Login</Link></li>
+          <li><Link to="/signup" className="hover:text-yellow-300 transition">Signup</Link></li>
+        </ul>
 
-        {/* Middle - Navigation Links */}
-        <div className="text-center md:text-left">
-          <h3 className="text-xl font-semibold mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-gray-200">
-            <li className="hover:text-yellow-300 cursor-pointer transition">Home</li>
-            <li className="hover:text-yellow-300 cursor-pointer transition">Post News</li>
-            <li className="hover:text-yellow-300 cursor-pointer transition">Read News</li>
-            <li className="hover:text-yellow-300 cursor-pointer transition">Ask AI</li>
-            <li className="hover:text-yellow-300 cursor-pointer transition">About</li>
-          </ul>
-        </div>
 
         {/* Right - Social Links */}
         <div className="text-center md:text-left">

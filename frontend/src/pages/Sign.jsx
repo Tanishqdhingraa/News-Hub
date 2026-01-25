@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import Footer from "../components/Footer"
 
 function Sign() {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ function Sign() {
   return (
     <>
     <Navbar/>
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-200">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br bg-blue-700 mt-10 rounded-4xl">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md space-y-6"
@@ -80,6 +81,7 @@ function Sign() {
         </div>
       </form>
     </div>
+    <Footer/>
     </>
     
   );

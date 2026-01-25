@@ -26,7 +26,7 @@ const AskAI1 = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-blue-600 to-indigo-800 flex flex-col items-center justify-center py-10 px-4">
+    <section className="min-h-screen bg-gradient-to-b bg-blue-700 mt-12 rounded-4xl flex flex-col items-center justify-center py-10 px-4">
       {/* Header */}
       <h1 className="text-4xl font-extrabold text-white mb-8">
         🤖 Ask <span className="text-yellow-300">AI</span> to Verify News

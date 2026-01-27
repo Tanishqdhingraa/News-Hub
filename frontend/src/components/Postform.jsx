@@ -30,7 +30,7 @@ function Postform() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-blue-300 p-6">
+    <div className="flex justify-center items-center min-h-screen bg-blue-700 mt-12 rounded-4xl p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md space-y-5"

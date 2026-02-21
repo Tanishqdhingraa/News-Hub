@@ -1,26 +1,29 @@
-import amqp from "amqplib"
+import amqp from "amqplib";
 
-export async function Postednewsproducer(email , message) {
-    try {
-        const connection = await amqp.connect("amqp://admin:admin123@localhost:5672")
-        const channel = await connection.createChannel()
+const EXCHANGE = "NEWS_EVENTS";
 
-        const routingkey = 'postroutingkey'
-        const queue = 'postqueue'
-        const exchange = 'postexchange'
+export async function publishNewsCreated(news) {
+  const connection = await amqp.connect("amqp://admin:admin123@localhost:5672");
+  const channel = await connection.createChannel();
 
-        await channel.assertExchange(exchange, 'direct', { durable: true })
-        await channel.assertQueue(queue, { durable: false })
-        await channel.bindQueue(queue, exchange, routingkey) // ✅
+  await channel.assertExchange(EXCHANGE, "topic", { durable: true });
 
-        channel.publish(
-            exchange,
-            routingkey,
-            Buffer.from(JSON.stringify(message))
-        )
+  const payload = {
+    id: news._id,
+    title: news.title,
+    content: news.content,
+    image: news.image || null,
+    authorId: news.authorId,
+    createdAt: news.createdAt
+  };
 
-        console.log('✅ Producer is running successfully')
-    } catch (error) {
-        console.log('❌ Producer error:', error.message)
-    }
+  channel.publish(
+    EXCHANGE,
+    "news.created",
+    Buffer.from(JSON.stringify(payload))
+  );
+
+  console.log("📰 NEWS_CREATED event sent");
+
+  setTimeout(() => connection.close(), 500);
 }

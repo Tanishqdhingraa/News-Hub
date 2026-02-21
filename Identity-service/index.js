@@ -15,7 +15,7 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.send("🟢 Identity Service is Running...");
+  res.send(" Identity Service is Running...");
 });
 
 const startServer = async () => {

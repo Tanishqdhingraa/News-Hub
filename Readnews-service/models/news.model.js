@@ -1,25 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const readNewsSchema = new mongoose.Schema(
-  {
-    postId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      index: true, // 🔥 fast lookup
-    },
+const newsSchema = new mongoose.Schema({
+  postId: { type: String, required: true },
+  subject: { type: String, required: true },
+  content: { type: String, required: true },
+  photo: { type: String },
+  createdAt: { type: Date }
+}, { timestamps: true });
 
-    subject: String,
-
-    content: String,
-
-    photo: String,
-
-    createdAt: {
-      type: Date,
-      index: true,
-    },
-  },
-  { timestamps: false } // createdAt comes from event
-);
-
-module.exports = mongoose.model("read_news", readNewsSchema);
+export default mongoose.model("ReadNews", newsSchema);

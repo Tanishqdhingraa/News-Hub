@@ -3,10 +3,7 @@ import jwt from "jsonwebtoken";
 import { publishUserLogin } from "../rabbitmq/producer.js";
 
 
-// 🚨 JWT secret must exist
-// if (!process.env.JWT_SECRET) {
-//   throw new Error("JWT_SECRET is not defined in environment variables");
-// }
+
 
 const JWT_SECRET = process.env.JWT_SECRET;
 export const registerUser = async (req, res) => {

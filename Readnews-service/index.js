@@ -1,5 +1,7 @@
 import express from "express";
 import { consumeNewsCreated } from "./rabbitmq/consumer.js";
+import newRoutes from "./routes/news.routes.js";
+
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
 dotenv.config()
@@ -15,9 +17,12 @@ async function startServer() {
     // 🔥 Start RabbitMQ consumer AFTER DB is ready
     await consumeNewsCreated();
 
-    app.get("/", (req, res) => {
+    app.get("/api/v1", (req, res) => {
       res.send("👋 Hello Read News service!");
+    
     });
+
+    app.use("/api/v1",newRoutes)
 
     app.listen(port, () => {
       console.log(`✅ Read news service listening on http://localhost:${port}`);
